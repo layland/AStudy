@@ -49,7 +49,7 @@ public class myDailyWord extends TabActivity {
                 android.R.layout.simple_list_item_multiple_choice,
                 wordDisplay);
         if (updateListView == null) {
-            Toast.makeText(this, "자료가 없습니다.", 0).show();
+            Toast.makeText(this, "자료가 없습니다.",  Toast.LENGTH_SHORT).show();
         }
         updateListView.setAdapter(updateAdapter);
         updateListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -84,14 +84,14 @@ public class myDailyWord extends TabActivity {
                 getWordList();
                 inputWord.setText("");
                 inputMean.setText("");
-                Toast.makeText(this, "새로운 단어 저장성공!", 0).show();
+                Toast.makeText(this, "새로운 단어 저장성공!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.saveBtn:
                 String uSpel = updateSpel.getText().toString();
                 String uMean = updateMean.getText().toString();
                 studyMyDailyWordDTO uWord = new studyMyDailyWordDTO(selectedId, uSpel, uMean);
                 studyMydailyWordDAO.update(dManager.getWritableDatabase(), uWord);
-                Toast.makeText(this, "수정하였습니다.", 0).show();
+                Toast.makeText(this, "수정하였습니다.",  Toast.LENGTH_SHORT).show();
                 getWordList();
                 updateAdapter.notifyDataSetChanged();
                 doUpdate(null);
@@ -174,16 +174,16 @@ public class myDailyWord extends TabActivity {
             View view = null;
             switch (pageNum) {
                 case 1:
-                    view = inflater.inflate(R.layout.myDailyWord_page1, null);
+                    view = inflater.inflate(R.layout.my_daily_word_page1, null);
                     break;
                 case 2:
-                    view = inflater.inflate(R.layout.myDailyWord_page2, null);
+                    view = inflater.inflate(R.layout.my_daily_word_page2, null);
                     break;
                 case 3:
-                    view = inflater.inflate(R.layout.myDailyWord_page3, null);
+                    view = inflater.inflate(R.layout.my_daily_word_page3, null);
                     break;
                 case 4:
-                    view = inflater.inflate(R.layout.myDailyWord_page4, null);
+                    view = inflater.inflate(R.layout.my_daily_word_page4, null);
                     break;
             }
             return view;

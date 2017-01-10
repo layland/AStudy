@@ -27,6 +27,6 @@
     <dimen name="phonebook_footer_add_person_size">50dp</dimen>
 
     <!-- Dialog -->
-    <dimen name="dialog_height">500dp</dimen>
+    <dimen name="dialog_height">300dp</dimen>
 
 </resources>
