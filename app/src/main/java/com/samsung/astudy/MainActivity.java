@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.samsung.astudy.phoneBookDB.PhoneBookDBHelper;
+
 public class MainActivity extends Activity implements View.OnClickListener {
 
     private final int PERMISSION_ALL = 1;
@@ -39,8 +41,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         firstLayout.setOnClickListener(this);
         secondLayout.setOnClickListener(this);
         thirdLayout.setOnClickListener(this);
-
-
     }
 
     @Override
@@ -101,4 +101,5 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         }
     }
+
 }

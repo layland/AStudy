@@ -80,6 +80,7 @@
             <EditText
                 android:id="@+id/new_dialog_input_tel"
                 android:layout_width="0dp"
+                android:inputType="phone"
                 android:layout_height="wrap_content"
                 android:layout_weight="8" />
         </LinearLayout>
