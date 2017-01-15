@@ -22,6 +22,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private final int PERMISSION_ALL = 1;
     private String[] PERMISSIONS =
             {Manifest.permission.SEND_SMS,
+            Manifest.permission.READ_SMS,
             Manifest.permission.RECEIVE_SMS,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION};
