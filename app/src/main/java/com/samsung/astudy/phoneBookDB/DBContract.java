@@ -2,7 +2,6 @@ package com.samsung.astudy.phoneBookDB;
 
 // DB 스트링 모으미
 
-import android.net.Uri;
 import android.provider.BaseColumns;
 
 public final class DBContract {
