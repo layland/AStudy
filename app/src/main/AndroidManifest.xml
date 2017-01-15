@@ -29,9 +29,6 @@
             android:configChanges="orientation|keyboardHidden" />
         <!--suppress AndroidDomInspection -->
         <activity
-            android:name=".StudyPhoneBookInputDialog"
-            android:configChanges="orientation|keyboardHidden" />
-        <activity
             android:name=".FindMember"
             android:configChanges="orientation|keyboardHidden"/>
         <service android:name=".FindMemberService" android:process=":remote" />

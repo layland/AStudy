@@ -18,14 +18,7 @@
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/girl" />
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@id/new_dialog_icon"
-            android:src="@drawable/boy" />
+            android:src="@drawable/studygroup" />
 
         <TextView
             android:id="@+id/new_dialog_name"
@@ -33,57 +26,31 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:text="스터디원 추가하기"
+            android:text="스터디 추가하기"
             android:textColor="@color/white"
             android:textSize="30dp" />
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_below="@id/new_dialog_header"
+        android:id="@+id/new_dialog_content"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:orientation="vertical">
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/new_dialog_content"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/new_dialog_text_name"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="2"
+            android:text="스터디 이름 : "
+            android:textAlignment="center" />
 
-            <TextView
-                android:id="@+id/new_dialog_text_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="이름 : "
-                android:textAlignment="center" />
-
-            <EditText
-                android:id="@+id/new_dialog_input_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="8" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/new_dialog_text_tel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="전화번호 : "
-                android:textAlignment="center" />
-
-            <EditText
-                android:id="@+id/new_dialog_input_tel"
-                android:layout_width="0dp"
-                android:inputType="phone"
-                android:layout_height="wrap_content"
-                android:layout_weight="8" />
-        </LinearLayout>
+        <EditText
+            android:id="@+id/new_dialog_input_study_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8" />
     </LinearLayout>
 
     <TextView

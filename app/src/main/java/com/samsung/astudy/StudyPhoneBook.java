@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.samsung.astudy.dialog.PersonInputDialog;
+import com.samsung.astudy.dialog.StudyInputDialog;
+
 public class StudyPhoneBook extends Activity implements View.OnClickListener {
 
     private Context mContext;
@@ -42,6 +45,7 @@ public class StudyPhoneBook extends Activity implements View.OnClickListener {
         int addBtnColor = mContext.getResources().getColor(R.color.phonebook_add_icon_bgcolor, null);
         mAddBtn = (ImageView) findViewById(R.id.phonebook_add_btn);
         mAddBtn.getDrawable().setTint(addBtnColor);
+        mAddBtn.setOnClickListener(this);
 
         mAdapter.addList(new PersonData(true, "studyname1", "name1", "telephone1"));
         mAdapter.addList(new PersonData(true, "studyname1", "name2", "telephone2"));
@@ -53,21 +57,25 @@ public class StudyPhoneBook extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        StudyPhoneBookInputDialog inputDialog = null;
+
         switch (v.getId()) {
             case R.id.phonebook_add_person_btn:
                 // footer. add person
-                inputDialog = new StudyPhoneBookInputDialog(this, true);
+                PersonInputDialog personinputDialog = new PersonInputDialog(this);
+                if (personinputDialog != null) {
+                    personinputDialog.show();
+                }
                 break;
             case R.id.phonebook_add_btn:
                 // floating. add study
-                inputDialog = new StudyPhoneBookInputDialog(this, false);
+                StudyInputDialog studyinputDialog = new StudyInputDialog(this);
+                if (studyinputDialog != null) {
+                    studyinputDialog.show();
+                }
                 break;
             default:
                 break;
         }
-        if (inputDialog != null) {
-            inputDialog.show();
-        }
+
     }
 }

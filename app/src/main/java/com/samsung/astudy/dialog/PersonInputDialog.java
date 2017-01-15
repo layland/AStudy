@@ -1,39 +1,38 @@
-package com.samsung.astudy;
+package com.samsung.astudy.dialog;
 
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.samsung.astudy.phoneBookDB.DBContract;
+import com.samsung.astudy.R;
 import com.samsung.astudy.phoneBookDB.DBContract.PhoneBook;
 import com.samsung.astudy.phoneBookDB.PhoneBookDBHelper;
 
-public class StudyPhoneBookInputDialog extends Dialog implements View.OnClickListener {
+import java.util.ArrayList;
 
-    public static final String TAG = "StudyPhoneBookInputDialog";
+public class PersonInputDialog extends Dialog implements View.OnClickListener {
+
+    public static final String TAG = "PersonInputDialog";
     private Context mContext;
     private TextView mCancel;
     private TextView mSave;
     private EditText mName;
-    //TODO: 스터디네임 스피너로 선택할 수 있게 하기
-    private TextView mStudyName;
+    private Spinner mStudyNameSpinner;
+    private String mStudyName;
     private EditText mTel;
-    private AlertDialog.Builder mBuilder;
     private PhoneBookDBHelper mHelper;
+    private ArrayList<String> mStudyNames;
 
-    public StudyPhoneBookInputDialog(Context context, boolean isStudyPerson) {
+    public PersonInputDialog(Context context) {
         super(context);
         mContext = context;
     }
@@ -41,7 +40,7 @@ public class StudyPhoneBookInputDialog extends Dialog implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.study_phonebook_input_dialog);
+        setContentView(R.layout.study_phonebook_person_input_dialog);
         mHelper = new PhoneBookDBHelper(mContext);
         onCreateView();
 
@@ -50,18 +49,40 @@ public class StudyPhoneBookInputDialog extends Dialog implements View.OnClickLis
     private void onCreateView() {
         mCancel = (TextView) findViewById(R.id.new_dialog_cancel);
         mSave = (TextView) findViewById(R.id.new_dialog_save);
+        mStudyNameSpinner = (Spinner) findViewById(R.id.study_name_spinner);
         mName = (EditText) findViewById(R.id.new_dialog_input_name);
         mTel = (EditText) findViewById(R.id.new_dialog_input_tel);
         mTel.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+
+        setStudyNameToSpinner();
 
         //click
         mCancel.setOnClickListener(this);
         mSave.setOnClickListener(this);
 
-        // 여러분이 원하시던 키보드 튀어나오미 'ㅅ'
         mName.requestFocus();
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    private void setStudyNameToSpinner() {
+        mStudyNames = new ArrayList();
+        mStudyNames.add("DEFAULT");
+        mStudyNames = mHelper.studyNamequery(mHelper);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_dropdown_item, mStudyNames);
+        mStudyNameSpinner.setAdapter(adapter);
+        mStudyNameSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mStudyName = mStudyNames.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
@@ -79,8 +100,7 @@ public class StudyPhoneBookInputDialog extends Dialog implements View.OnClickLis
                         Bundle bundle = new Bundle();
                         bundle.putString(PhoneBook.NAME, mName.getText().toString());
                         bundle.putInt(PhoneBook.TEL, Integer.parseInt( mTel.getText().toString() ));
-                        //TODO : 일단 다 기본그룹
-                        bundle.putString(PhoneBook.STUDY_NAME, "default");
+                        bundle.putString(mStudyName, "default");
                         mHelper.insert(mHelper, bundle);
                     }
                     Toast.makeText(mContext, "saved", Toast.LENGTH_LONG).show();
