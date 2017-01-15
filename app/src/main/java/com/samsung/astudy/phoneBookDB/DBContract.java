@@ -13,6 +13,9 @@ public final class DBContract {
         public static final String NAME = "name";
         public static final String TEL = "telephone";
         public static final String STUDY_NAME = "study_name";
+        public static final String FM = "fm";
+        public static final String LATITUDE = "latitude";
+        public static final String LONGITUDE = "longitude";
     }
 
 }
