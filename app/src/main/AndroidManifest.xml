@@ -26,7 +26,12 @@
             android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".StudyPhoneBook"
-            android:configChanges="orientation|keyboardHidden" />
+            android:configChanges="orientation|keyboardHidden">
+            <intent-filter>
+                <action android:name="com.samsung.astudy.person_update_action"/>
+                <action android:name="com.samsung.astudy.study_update_action"/>
+            </intent-filter>
+        </activity>
         <!--suppress AndroidDomInspection -->
         <activity
             android:name=".FindMember"

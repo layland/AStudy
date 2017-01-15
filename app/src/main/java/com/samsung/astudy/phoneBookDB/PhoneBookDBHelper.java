@@ -1,10 +1,14 @@
 package com.samsung.astudy.phoneBookDB;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
+
+import com.samsung.astudy.PersonData;
 
 import java.util.ArrayList;
 
@@ -65,7 +69,7 @@ public class PhoneBookDBHelper extends SQLiteOpenHelper {
     /*     Insert     */
     public void insert(PhoneBookDBHelper helper, Bundle bundle) {
         helper.getWritableDatabase();
-        String studyName = bundle.getString(DBContract.PhoneBook.STUDY_NAME, "default");
+        String studyName = bundle.getString(DBContract.PhoneBook.STUDY_NAME, "DEFAULT");
         String personName = bundle.getString(DBContract.PhoneBook.NAME);
         int telephoneNumber = bundle.getInt(DBContract.PhoneBook.TEL);
         int fm = bundle.getInt(DBContract.PhoneBook.FM, 0);
@@ -80,7 +84,7 @@ public class PhoneBookDBHelper extends SQLiteOpenHelper {
 
     public void studyNameInsert(PhoneBookDBHelper helper, Bundle bundle) {
         helper.getWritableDatabase();
-        String studyName = bundle.getString(DBContract.Study.STUDY_NAME, "default");
+        String studyName = bundle.getString(DBContract.Study.STUDY_NAME, "DEFAULT");
         String sql_insert = "INSERT INTO " + DBContract.Study.TABLE_NAME + " VALUES ('"
                 + studyName + "');";
         mDB.execSQL(sql_insert);
@@ -111,17 +115,37 @@ public class PhoneBookDBHelper extends SQLiteOpenHelper {
 
 
     /*     Query     */
-    public void query(PhoneBookDBHelper helper) {
-
+    public ArrayList<PersonData> query(PhoneBookDBHelper helper) {
+        // 스터디원 전부 가져오기 (가공은 각자 위치에서 하는걸로...)
+        ArrayList<PersonData> persons = new ArrayList<>();
+        helper.getReadableDatabase();
+        String sql_query = "SELECT " + DBContract.PhoneBook.NAME +", "
+                + DBContract.PhoneBook.TEL + ", "
+                + DBContract.PhoneBook.STUDY_NAME + ", "
+                +DBContract.PhoneBook.FM
+                + " FROM " + DBContract.PhoneBook.TABLE_NAME+";";
+        Cursor result = mDB.rawQuery(sql_query, null);
+        while(result.moveToNext()) {
+            Log.d(TAG, "0 : "+result.getString(0)+" 1:" + result.getInt(1));
+            String person_name = result.getString(0);
+            int telephone = result.getInt(1);
+            String study_name = result.getString(2);
+            int fm = result.getInt(3);
+            persons.add(new PersonData(fm == 0, study_name, person_name, String.valueOf(telephone)));
+        }
+        result.close();
+        helper.close();
+        return persons;
     }
+
     public ArrayList<String> studyNamequery(PhoneBookDBHelper helper) {
+        // 스터디 이름 전부 불러오기
         helper.getReadableDatabase();
         ArrayList<String> studies = new ArrayList<>();
+        studies.add("DEFAULT");
         String sql_query = "SELECT " + DBContract.Study.STUDY_NAME
                 + " FROM " + DBContract.Study.TABLE_NAME+";";
-
         Cursor result = mDB.rawQuery(sql_query, null);
-
         while(result.moveToNext()) {
             String studyName = result.getString(0);
             studies.add(studyName);
@@ -132,6 +156,7 @@ public class PhoneBookDBHelper extends SQLiteOpenHelper {
     }
 
     public boolean ifStudyExist(PhoneBookDBHelper helper, String studyName) {
+        // 중복 스터디명 걸러내기 위한 기존 스터디 유무여부
         helper.getReadableDatabase();
         String sql_query = "SELECT " + DBContract.Study.STUDY_NAME
                 + " FROM " + DBContract.Study.TABLE_NAME

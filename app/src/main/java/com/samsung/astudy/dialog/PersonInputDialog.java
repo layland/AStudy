@@ -2,6 +2,7 @@ package com.samsung.astudy.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 public class PersonInputDialog extends Dialog implements View.OnClickListener {
 
     public static final String TAG = "PersonInputDialog";
+    private String PERSON_UPDATE_ACTION = "com.samsung.astudy.person_update_action";
     private Context mContext;
     private TextView mCancel;
     private TextView mSave;
@@ -100,8 +102,11 @@ public class PersonInputDialog extends Dialog implements View.OnClickListener {
                         Bundle bundle = new Bundle();
                         bundle.putString(PhoneBook.NAME, mName.getText().toString());
                         bundle.putInt(PhoneBook.TEL, Integer.parseInt( mTel.getText().toString() ));
-                        bundle.putString(mStudyName, "default");
+                        bundle.putString(mStudyName, "DEFAULT");
                         mHelper.insert(mHelper, bundle);
+                        Intent updateBR = new Intent();
+                        updateBR.setAction(PERSON_UPDATE_ACTION);
+                        mContext.sendBroadcast(updateBR);
                     }
                     Toast.makeText(mContext, "saved", Toast.LENGTH_LONG).show();
                     dismiss();

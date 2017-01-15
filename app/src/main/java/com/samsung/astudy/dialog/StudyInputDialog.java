@@ -3,6 +3,7 @@ package com.samsung.astudy.dialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -17,6 +18,8 @@ import com.samsung.astudy.phoneBookDB.PhoneBookDBHelper;
 public class StudyInputDialog extends Dialog implements View.OnClickListener {
 
     public static final String TAG = "StudyInputDialog";
+    private String STUDY_UPDATE_ACTION = "com.samsung.astudy.study_update_action";
+
     private Context mContext;
     private TextView mCancel;
     private TextView mSave;
@@ -66,6 +69,10 @@ public class StudyInputDialog extends Dialog implements View.OnClickListener {
                         Bundle bundle = new Bundle();
                         bundle.putString(DBContract.PhoneBook.STUDY_NAME, study_name);
                         mHelper.studyNameInsert(mHelper, bundle);
+                        Intent updateBR = new Intent();
+                        updateBR.setAction(STUDY_UPDATE_ACTION);
+                        mContext.sendBroadcast(updateBR);
+
                     }
                     Toast.makeText(mContext, "saved", Toast.LENGTH_LONG).show();
                     dismiss();
