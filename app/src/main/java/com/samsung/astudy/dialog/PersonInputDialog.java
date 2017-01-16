@@ -101,8 +101,8 @@ public class PersonInputDialog extends Dialog implements View.OnClickListener {
                     synchronized (this) {
                         Bundle bundle = new Bundle();
                         bundle.putString(PhoneBook.NAME, mName.getText().toString());
-                        bundle.putInt(PhoneBook.TEL, Integer.parseInt( mTel.getText().toString() ));
-                        bundle.putString(mStudyName, "DEFAULT");
+                        bundle.putString(PhoneBook.TEL, mTel.getText().toString());
+                        bundle.putString(PhoneBook.STUDY_NAME, mStudyName);
                         mHelper.insert(mHelper, bundle);
                         Intent updateBR = new Intent();
                         updateBR.setAction(PERSON_UPDATE_ACTION);

@@ -75,11 +75,9 @@ public class StudyPhoneBookAdapter extends BaseAdapter {
 
     public void addList(PersonData data) {
         mPerson.add(data);
-        notifyDataSetChanged();
     }
 
     public void clear () {
         mPerson.clear();
-        notifyDataSetChanged();
     }
 }

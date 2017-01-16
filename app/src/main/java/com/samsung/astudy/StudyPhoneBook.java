@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -104,6 +105,13 @@ public class StudyPhoneBook extends Activity implements View.OnClickListener {
         mListView.setAdapter(mAdapter);
         mListView.addHeaderView(mHeaderView);
         mListView.addFooterView(mFooterView);
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                return false;
+            }
+        });
 
         RelativeLayout addPersonLayout = (RelativeLayout) mFooterView.findViewById(R.id.phonebook_add_person_btn);
         addPersonLayout.setOnClickListener(this);
@@ -119,14 +127,16 @@ public class StudyPhoneBook extends Activity implements View.OnClickListener {
     private void setDataFromDB() {
         mAdapter.clear();
         String currentStudyName = mStudyNames.get(mStudyNamePosition);
+        Log.d(TAG, currentStudyName);
         mBack.setVisibility(mStudyNamePosition != 0 ? View.VISIBLE : View.INVISIBLE);
-        mNext.setVisibility(mStudyNamePosition != mStudyNames.size()-1 ? View.VISIBLE : View.INVISIBLE);
+        mNext.setVisibility(mStudyNamePosition != mStudyNames.size() - 1 ? View.VISIBLE : View.INVISIBLE);
         mStudyName.setText(currentStudyName);
         for(PersonData p : mStudyPersons) {
             if (p.getmStudyName().equals(currentStudyName)) {
                 mAdapter.addList(p);
             }
         }
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
