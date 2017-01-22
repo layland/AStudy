@@ -1,6 +1,7 @@
 package com.samsung.astudy;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,5 +80,11 @@ public class StudyPhoneBookAdapter extends BaseAdapter {
 
     public void clear () {
         mPerson.clear();
+    }
+
+    public void printLog() {
+        for(PersonData p : mPerson) {
+            Log.d("hi","in mPerson:"+p.getmName()+", "+p.getmStudyName());
+        }
     }
 }

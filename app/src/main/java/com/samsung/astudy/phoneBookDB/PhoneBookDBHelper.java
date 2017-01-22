@@ -125,7 +125,7 @@ public class PhoneBookDBHelper extends SQLiteOpenHelper {
                 + " FROM " + DBContract.PhoneBook.TABLE_NAME+";";
         Cursor result = mDB.rawQuery(sql_query, null);
         while(result.moveToNext()) {
-            Log.d(TAG, "0 : "+result.getString(0)+" 2:" + result.getString(2));
+            //Log.d(TAG, "0 : "+result.getString(0)+" 2:" + result.getString(2));
             String person_name = result.getString(0);
             String telephone = result.getString(1);
             String study_name = result.getString(2);
@@ -169,5 +169,14 @@ public class PhoneBookDBHelper extends SQLiteOpenHelper {
         result.close();
         helper.close();
         return true;
+    }
+
+    public void cleanUp(PhoneBookDBHelper helper) {
+        // to Drop the table
+        helper.getWritableDatabase();
+        mDB.execSQL("DROP TABLE IF EXISTS " + DBContract.PhoneBook.TABLE_NAME);
+        createPhoneBookDB(mDB);
+        mDB.execSQL("DROP TABLE IF EXISTS " + DBContract.Study.TABLE_NAME);
+        createStudyNameDB(mDB);
     }
 }

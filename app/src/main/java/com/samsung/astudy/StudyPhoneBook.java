@@ -10,12 +10,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.samsung.astudy.dialog.PersonDetailDialog;
 import com.samsung.astudy.dialog.PersonInputDialog;
 import com.samsung.astudy.dialog.StudyInputDialog;
 import com.samsung.astudy.phoneBookDB.PhoneBookDBHelper;
@@ -109,7 +111,15 @@ public class StudyPhoneBook extends Activity implements View.OnClickListener {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                return false;
+                Bundle detailBundle = new Bundle();
+                detailBundle.putString("studyName", mAdapter.getItem(position - 1).getmStudyName());
+                detailBundle.putString("personName", mAdapter.getItem(position - 1).getmName());
+                detailBundle.putString("telNumber", mAdapter.getItem(position - 1).getmTelNum());
+
+                PersonDetailDialog detailDialog = new PersonDetailDialog(StudyPhoneBook.this, detailBundle);
+                detailDialog.show();
+
+                return true;
             }
         });
 
@@ -137,6 +147,7 @@ public class StudyPhoneBook extends Activity implements View.OnClickListener {
             }
         }
         mAdapter.notifyDataSetChanged();
+        mListView.setAdapter(mAdapter);
     }
 
     @Override

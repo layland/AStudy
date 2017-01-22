@@ -18,7 +18,8 @@
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/studygroup" />
+            android:tint="@color/white"
+            android:src="@drawable/group" />
 
         <TextView
             android:id="@+id/new_dialog_name"

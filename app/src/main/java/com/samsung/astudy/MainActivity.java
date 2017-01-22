@@ -61,8 +61,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                 break;
             case R.id.third_container:
-                Intent myDailyWord = new Intent(this,myDailyWord.class);
-                startActivity(myDailyWord);
+                //Intent myDailyWord = new Intent(this,myDailyWord.class);
+                //startActivity(myDailyWord);
+                PhoneBookDBHelper helper = new PhoneBookDBHelper(this);
+                helper.cleanUp(helper);
                 break;
             default:
                 break;
